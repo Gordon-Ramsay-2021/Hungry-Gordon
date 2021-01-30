@@ -69,7 +69,7 @@ public class MainBurger : MonoBehaviour
             ingredient.isKinematic = false;
         }
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
 
         for (int i = 1; i < burgerIngredients.Length; i++)
         {
@@ -77,7 +77,11 @@ public class MainBurger : MonoBehaviour
             Destroy(ingredient.GetComponent<Rigidbody>());
             Destroy(ingredient.GetComponent<Collider>());
         }
-        gameObject.GetComponent<Collider>();
+
+        BoxCollider collider = gameObject.GetComponent<BoxCollider>();
+        collider.size = new Vector3(1,5,1);//makes 5 times taller
+        collider.center = new Vector3(0, 2.5f, 0);
+
 
     }
 
