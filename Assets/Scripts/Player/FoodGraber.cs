@@ -87,7 +87,6 @@ public class FoodGraber : MonoBehaviour
             {
                 if (lastBurger.CheckAddComponent(currentIngredient))  //if it can't add the ingredient 
                 {
-                    currentIngredient.transform.parent = null;
                     currentIngredient = null;
                 }
             }
