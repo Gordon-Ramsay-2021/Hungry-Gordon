@@ -30,13 +30,19 @@ public class FoodGraber : MonoBehaviour
 
     void Update()
     {
-        if (currentIngredient == null) CheckRayCastIngredient();
+        if (currentIngredient == null)
+        {
+            if (!CheckRayCastIngredient())
+            {
+                CheckRayCastAloneBurger();
+            }
+        }
         if (currentIngredient != null) CheckRayCastBurger();
         HandleIngredient();
 
     }
 
-    private void CheckRayCastIngredient()
+    private bool CheckRayCastIngredient()
     {
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -49,11 +55,13 @@ public class FoodGraber : MonoBehaviour
                 ChangeUIText("E: " + hit.collider.gameObject.GetComponent<BurgerComponent>().ComponentName, true);   //ingredients name
                 lastSeenIngredient = hit.collider.gameObject;
             }
+            return true;
         }
         else 
         { 
             if (onIngredient) ChangeUIText("", false);
             lookingAtBurger = false;
+            return false;
         }
     }
 
@@ -68,20 +76,38 @@ public class FoodGraber : MonoBehaviour
             if (!onIngredient)
             {
                 lastBurger = hit.collider.gameObject.GetComponent<MainBurger>();
-                
-                if (!lastBurger.FinishedBurger) ChangeUIText("F: Place on burger", true);
-                else
-                {
-                    ChangeUIText("Finsihed Burger", true);
-                }
-            }
 
+                if (!lastBurger.FinishedBurger) 
+                {
+                    ChangeUIText("F: Place on burger", true);        
+                }
+                else ChangeUIText("Finsihed Burger", true);            
+            }
             if (Input.GetKeyDown(KeyCode.F))
             {
-                currentIngredient.transform.parent = null;
-                
-                lastBurger.CheckAddComponent(currentIngredient);
-                currentIngredient = null; 
+                if (lastBurger.CheckAddComponent(currentIngredient))  //if it can't add the ingredient 
+                {
+                    currentIngredient.transform.parent = null;
+                    currentIngredient = null;
+                }
+            }
+        }
+        else { if (onIngredient) ChangeUIText("", false); lastBurger = null; }
+    }
+
+    private void CheckRayCastAloneBurger()
+    {
+        RaycastHit hit;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, range, burgerLayer))
+        {
+            if (!onIngredient)
+            {
+                lastBurger = hit.collider.gameObject.GetComponent<MainBurger>();
+
+                if (!lastBurger.FinishedBurger) ChangeUIText("Burger", true);
+                else ChangeUIText("Finsihed Burger", true);
             }
         }
         else { if (onIngredient) ChangeUIText("", false); lastBurger = null; }

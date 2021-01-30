@@ -55,8 +55,7 @@ public class MainBurger : MonoBehaviour
         }
         else burgerComponents.Push(burgerIngredient);
 
-        burgerIngredient.transform.position = transform.position + new Vector3(0, burgerComponents.Count * 0.08f, 0);
-        Debug.Log(transform.position);
+        burgerIngredient.transform.position = transform.position + new Vector3(0, burgerComponents.Count * 0.06f, 0);
         burgerIngredient.transform.parent = gameObject.transform;
         
     }
