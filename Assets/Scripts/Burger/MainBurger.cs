@@ -7,13 +7,11 @@ public class MainBurger : MonoBehaviour
     private Stack<GameObject> burgerComponents;
     [SerializeField] int MaxAmountburgerComponents = 5;
 
-    private bool FinishedBurger = false;
+    public bool FinishedBurger = false;
 
     void Start()
     {
         burgerComponents = new Stack<GameObject>(5);
-
-
     }
 
     void Update()
@@ -57,7 +55,7 @@ public class MainBurger : MonoBehaviour
         }
         else burgerComponents.Push(burgerIngredient);
 
-        burgerIngredient.transform.position = transform.position;// + new Vector3(0, burgerComponents.Count / 5, 0);
+        burgerIngredient.transform.position = transform.position + new Vector3(0, burgerComponents.Count * 0.08f, 0);
         Debug.Log(transform.position);
         burgerIngredient.transform.parent = gameObject.transform;
         

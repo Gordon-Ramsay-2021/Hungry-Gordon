@@ -11,6 +11,7 @@ public class FoodGraber : MonoBehaviour
 
     private GameObject currentIngredient;
     private GameObject lastSeenIngredient;
+    private MainBurger lastBurger;
 
     [Header("Grabing settings")]
     public LayerMask foodLayer;
@@ -45,7 +46,7 @@ public class FoodGraber : MonoBehaviour
             lookingAtBurger = true;
             if (!onIngredient && currentIngredient == null)
             {
-                ChangeUIText(hit.collider.gameObject.GetComponent<BurgerComponent>().ComponentName, true);   //ingredients name
+                ChangeUIText("E: " + hit.collider.gameObject.GetComponent<BurgerComponent>().ComponentName, true);   //ingredients name
                 lastSeenIngredient = hit.collider.gameObject;
             }
         }
@@ -64,16 +65,26 @@ public class FoodGraber : MonoBehaviour
         if (Physics.Raycast(ray, out hit, range, burgerLayer))
         {
 
-            if (!onIngredient) ChangeUIText("Place on burger", true);
+            if (!onIngredient)
+            {
+                lastBurger = hit.collider.gameObject.GetComponent<MainBurger>();
+                
+                if (!lastBurger.FinishedBurger) ChangeUIText("F: Place on burger", true);
+                else
+                {
+                    ChangeUIText("Finsihed Burger", true);
+                }
+            }
+
             if (Input.GetKeyDown(KeyCode.F))
             {
                 currentIngredient.transform.parent = null;
-                MainBurger burger = hit.collider.gameObject.GetComponent<MainBurger>();
-                burger.CheckAddComponent(currentIngredient);
+                
+                lastBurger.CheckAddComponent(currentIngredient);
                 currentIngredient = null; 
             }
         }
-        else { if (onIngredient) ChangeUIText("", false); }
+        else { if (onIngredient) ChangeUIText("", false); lastBurger = null; }
     }
 
 
