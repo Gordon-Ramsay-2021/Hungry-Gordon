@@ -7,11 +7,15 @@ public class MainBurger : MonoBehaviour
     private Stack<GameObject> burgerComponents;
     [SerializeField] int MaxAmountburgerComponents = 5;
 
+    public GameObject targetBurgerObj;
+    private TargetBurger targetBurger;
+
     public bool FinishedBurger = false;
 
     void Start()
     {
         burgerComponents = new Stack<GameObject>(5);
+        targetBurger = targetBurgerObj.GetComponent<TargetBurger>();
     }
 
     void Update()
@@ -51,6 +55,7 @@ public class MainBurger : MonoBehaviour
         burgerComponents.Push(burgerIngredient);
         burgerIngredient.transform.parent = gameObject.transform;
         burgerIngredient.transform.position = transform.position + new Vector3(0, burgerComponents.Count * 0.06f, 0);
+        burgerIngredient.GetComponent<Collider>().enabled = false;
 
         if (burgerType == BurgerComponent.BurgerComponentPosition.top)
         {
@@ -67,6 +72,8 @@ public class MainBurger : MonoBehaviour
         {
             Rigidbody ingredient = burgerIngredients[i].gameObject.GetComponent<Rigidbody>();
             ingredient.isKinematic = false;
+
+            burgerIngredients[i].GetComponent<Collider>().enabled = true;
         }
 
         yield return new WaitForSeconds(3f);
@@ -82,7 +89,7 @@ public class MainBurger : MonoBehaviour
         collider.size = new Vector3(1,5,1);//makes 5 times taller
         collider.center = new Vector3(0, 2.5f, 0);
 
-
+        Debug.Log(TargetBurger.CompareBurgers(targetBurger.currentTarget, burgerComponents));
     }
 
 }

@@ -8,8 +8,12 @@ public class FoodGraber : MonoBehaviour
     private Camera cam;
     private bool lookingAtBurger = false;
     private bool onIngredient = false;
+    private bool onBurger = false;
 
     private GameObject currentIngredient;
+    private bool canPickup = true;
+
+
     private GameObject lastSeenIngredient;
     private MainBurger lastBurger;
 
@@ -40,7 +44,6 @@ public class FoodGraber : MonoBehaviour
         }
         if (currentIngredient != null) CheckRayCastBurger();
         HandleIngredient();
-
     }
 
     private bool CheckRayCastIngredient()
@@ -89,6 +92,7 @@ public class FoodGraber : MonoBehaviour
                 if (lastBurger.CheckAddComponent(currentIngredient))  //if it can't add the ingredient 
                 {
                     currentIngredient = null;
+                    onIngredient = false;
                 }
             }
         }
@@ -102,15 +106,19 @@ public class FoodGraber : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, range, burgerLayer))
         {
-            if (!onIngredient)
+            if (!onBurger)
             {
                 lastBurger = hit.collider.gameObject.GetComponent<MainBurger>();
 
                 if (!lastBurger.FinishedBurger) ChangeUIText("Burger", true);
-                else ChangeUIText("Finsihed Burger", true);
+                else
+                {
+                    ChangeUIText("E: Finsihed Burger", true);                   
+                }
             }
+            if (Input.GetKeyDown(KeyCode.E) && currentIngredient == null && lastBurger.FinishedBurger) PickupItem(lastBurger.gameObject);   //pickup if pressed e, not holding anything and finsihed burger
         }
-        else { if (onIngredient) ChangeUIText("", false); lastBurger = null; }
+        else { if (onBurger) ChangeUIText("", false); lastBurger = null; }
     }
 
 
@@ -120,19 +128,33 @@ public class FoodGraber : MonoBehaviour
         {
             if(currentIngredient == null && onIngredient )
             {
-                currentIngredient = lastSeenIngredient;
-                currentIngredient.transform.parent = gameObject.transform;
-                currentIngredient.transform.position = holdPoint.position;
-
-                ChangeUIText("", false);
-            }
-            else if(currentIngredient != null )
+                PickupItem(lastSeenIngredient);
+            }           
+        }
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (currentIngredient != null)
             {
-                currentIngredient.transform.parent = null;
-                currentIngredient = null;
-                ChangeUIText("", false);
+                DropItem();
             }
         }
+    }
+    
+    private void PickupItem(GameObject item)
+    {
+        currentIngredient = item;
+        currentIngredient.transform.parent = gameObject.transform;
+        currentIngredient.GetComponent<Rigidbody>().isKinematic = true;
+        currentIngredient.transform.position = holdPoint.position;
+        ChangeUIText("", false);
+    }
+
+    private void DropItem()
+    {
+        currentIngredient.transform.parent = null;
+        currentIngredient.GetComponent<Rigidbody>().isKinematic = false;
+        currentIngredient = null;
+        ChangeUIText("", false);
     }
 
     private void ChangeUIText(string text, bool toggle)

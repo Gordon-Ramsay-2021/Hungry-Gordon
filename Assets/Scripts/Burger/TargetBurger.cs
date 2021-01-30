@@ -9,16 +9,16 @@ public class TargetBurger : MonoBehaviour
     public GameObject[] ingredients;
     public int MaxBurgerSize = 4;
 
-    private Stack<string> currentTarget;
+    public Stack<string> currentTarget;
 
     public void Start()
     {
         currentTarget = GetRandomBurger();
-        Debug.Log(currentTarget.Count);
         foreach(string ingr in currentTarget)
         {
             TargetBurgerUI.text += ingr + "\n";
         }
+        TargetBurgerUI.text += "Bottom-Bun";
 
 
     }
@@ -28,7 +28,7 @@ public class TargetBurger : MonoBehaviour
         int size = Random.Range(3, MaxBurgerSize);
         Stack<string> targetBurger = new Stack<string>();
 
-        targetBurger.Push("Patty");
+        targetBurger.Push("Beef Patty");
         for (int i = 0; i < size - 2; i++)
         {
             GameObject ingredient = ingredients[Random.Range(0, ingredients.Length)];
@@ -42,17 +42,18 @@ public class TargetBurger : MonoBehaviour
     public static int CompareBurgers(Stack<string> target, Stack<GameObject> burger )
     {
         int mistakes = 0;
-        for (int i = 0; i < target.Count; i++)
+        int iterations = target.Count;
+        for (int i = 0; i < iterations; i++)
         {
             string targetIngr = target.Pop();
             if(burger.Count == 0) { mistakes++; continue; }
 
             string actualIngr = burger.Pop().GetComponent<BurgerComponent>().ComponentName;
+
             if(targetIngr != actualIngr)
             {
                 mistakes++;
             }
-
         }
         return mistakes;
 
