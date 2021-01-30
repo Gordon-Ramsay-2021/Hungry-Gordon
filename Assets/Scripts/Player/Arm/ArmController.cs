@@ -14,8 +14,7 @@ public class ArmController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateArm()
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
@@ -37,7 +36,7 @@ public class ArmController : MonoBehaviour
 
         // Side to side
         ArmRig.transform.localPosition = new Vector3(
-            ArmRig.transform.localPosition.x,
+            ArmRig.transform.localPosition.x + Input.GetAxis("Mouse X") * SideToSideSpeed * Time.deltaTime,
             ArmRig.transform.localPosition.y,
             ArmRig.transform.localPosition.z
         );

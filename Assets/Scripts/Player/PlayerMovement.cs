@@ -10,18 +10,37 @@ public class PlayerMovement : MonoBehaviour
 	public bool moving = true;
 	public GameObject cameraObject;
 
-	private void Start()
+	private CamControl cam;
+	private ArmController arm;
+
+    private void Awake()
+    {
+		cam = GetComponentInChildren<CamControl>();
+		arm = GetComponent<ArmController>();
+	}
+
+    private void Start()
 	{
 		InitilisePlayer(); //set up player
 	}
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		if (moving)
 		{
 			Move();
+			cam.UpdateCamera();
+		}
+		else
+		{
+			arm.UpdateArm();
 		}
 
+		if (Input.GetKeyDown("g"))
+        {
+			moving = !moving;
+
+		}
 	}
 
 	void InitilisePlayer() // set up player

@@ -15,8 +15,7 @@ public class CamControl : MonoBehaviour
         Cursor.visible = false; //makes cursor invisible
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateCamera()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime; //takes in the user mouse movement on the X axis and times by the mouse sensitivity
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime; //takes in the user mouse movement on the Y axis and times by the mouse sensitivity
