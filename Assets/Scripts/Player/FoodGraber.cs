@@ -18,6 +18,7 @@ public class FoodGraber : MonoBehaviour
     public LayerMask burgerLayer;
     public Transform holdPoint;
     public float range = 5f;
+    public float throwPower = 5f;
 
     [Header("UI")]
     public Text pickupText;

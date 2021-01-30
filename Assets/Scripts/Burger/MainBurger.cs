@@ -55,28 +55,29 @@ public class MainBurger : MonoBehaviour
         if (burgerType == BurgerComponent.BurgerComponentPosition.top)
         {
             FinishedBurger = true;
-            AssembleBurger();
+            StartCoroutine(AssembleBurger());
         } 
     }
 
 
     private IEnumerator AssembleBurger()
     {
-        GameObject[] burgerIngredients = gameObject.GetComponentsInChildren<GameObject>();
-        for (int i = 0; i < burgerIngredients.Length; i++)
+        Transform[] burgerIngredients = gameObject.GetComponentsInChildren<Transform>();
+        for (int i = 1; i < burgerIngredients.Length; i++)
         {
-            Rigidbody ingredient = burgerIngredients[i].GetComponent<Rigidbody>();
+            Rigidbody ingredient = burgerIngredients[i].gameObject.GetComponent<Rigidbody>();
             ingredient.isKinematic = false;
         }
 
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(5f);
 
-        for (int i = 0; i < burgerIngredients.Length; i++)
+        for (int i = 1; i < burgerIngredients.Length; i++)
         {
-            GameObject ingredient = burgerIngredients[i];
-            Rigidbody rb = ingredient.GetComponent<Rigidbody>();
-            Destroy(rb);
+            GameObject ingredient = burgerIngredients[i].gameObject;
+            Destroy(ingredient.GetComponent<Rigidbody>());
+            Destroy(ingredient.GetComponent<Collider>());
         }
+        gameObject.GetComponent<Collider>();
 
     }
 
