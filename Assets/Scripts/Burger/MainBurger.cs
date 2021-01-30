@@ -28,13 +28,13 @@ public class MainBurger : MonoBehaviour
         {
             BurgerComponent ingredientDetails = burgerIngredient.GetComponent<BurgerComponent>();
             BurgerComponent.BurgerComponentPosition burgerType = ingredientDetails.ComponentPosition;
-
-            if (burgerComponents.Count == 0 && burgerType == BurgerComponent.BurgerComponentPosition.bottom)
+            
+            if (burgerComponents.Count < MaxAmountburgerComponents - 1)
             {
                 AddComponent(burgerIngredient, burgerType);
                 return true;
             }
-            else if (burgerComponents.Count < MaxAmountburgerComponents)
+            else if ( burgerType == BurgerComponent.BurgerComponentPosition.top)
             {
                 AddComponent(burgerIngredient, burgerType);
                 return true;
@@ -48,16 +48,36 @@ public class MainBurger : MonoBehaviour
     /// </summary>
     private void AddComponent(GameObject burgerIngredient, BurgerComponent.BurgerComponentPosition burgerType)
     {
-        if(burgerType == BurgerComponent.BurgerComponentPosition.top)
-        {
-            burgerComponents.Push(burgerIngredient);
-            FinishedBurger = true;
-        }
-        else burgerComponents.Push(burgerIngredient);
-
-        burgerIngredient.transform.position = transform.position + new Vector3(0, burgerComponents.Count * 0.06f, 0);
+        burgerComponents.Push(burgerIngredient);
         burgerIngredient.transform.parent = gameObject.transform;
-        
+        burgerIngredient.transform.position = transform.position + new Vector3(0, burgerComponents.Count * 0.06f, 0);
+
+        if (burgerType == BurgerComponent.BurgerComponentPosition.top)
+        {
+            FinishedBurger = true;
+            AssembleBurger();
+        } 
+    }
+
+
+    private IEnumerator AssembleBurger()
+    {
+        GameObject[] burgerIngredients = gameObject.GetComponentsInChildren<GameObject>();
+        for (int i = 0; i < burgerIngredients.Length; i++)
+        {
+            Rigidbody ingredient = burgerIngredients[i].GetComponent<Rigidbody>();
+            ingredient.isKinematic = false;
+        }
+
+        yield return new WaitForSeconds(20f);
+
+        for (int i = 0; i < burgerIngredients.Length; i++)
+        {
+            GameObject ingredient = burgerIngredients[i];
+            Rigidbody rb = ingredient.GetComponent<Rigidbody>();
+            Destroy(rb);
+        }
+
     }
 
 }
