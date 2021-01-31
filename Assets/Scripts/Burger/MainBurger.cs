@@ -23,6 +23,8 @@ public class MainBurger : MonoBehaviour
         
     }
 
+    public Stack<GameObject> BurgersComponents { get { return burgerComponents; } }
+
     /// <summary>
     /// checks whether the ingredient can be added to this burger, if so adds it 
     /// </summary>
@@ -76,7 +78,7 @@ public class MainBurger : MonoBehaviour
             burgerIngredients[i].GetComponent<Collider>().enabled = true;
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.2f);
 
         for (int i = 1; i < burgerIngredients.Length; i++)
         {
@@ -88,8 +90,6 @@ public class MainBurger : MonoBehaviour
         BoxCollider collider = gameObject.GetComponent<BoxCollider>();
         collider.size = new Vector3(1,5,1);//makes 5 times taller
         collider.center = new Vector3(0, 2.5f, 0);
-
-        Debug.Log(TargetBurger.CompareBurgers(targetBurger.currentTarget, burgerComponents));
     }
 
 }

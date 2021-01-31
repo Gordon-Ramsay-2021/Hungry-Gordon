@@ -14,11 +14,7 @@ public class TargetBurger : MonoBehaviour
     public void Start()
     {
         currentTarget = GetRandomBurger();
-        foreach(string ingr in currentTarget)
-        {
-            TargetBurgerUI.text += ingr + "\n";
-        }
-        TargetBurgerUI.text += "Bottom-Bun";
+        UpdateUI();
 
 
     }
@@ -28,7 +24,7 @@ public class TargetBurger : MonoBehaviour
         int size = Random.Range(3, MaxBurgerSize);
         Stack<string> targetBurger = new Stack<string>();
 
-        targetBurger.Push("Beef Patty");
+        targetBurger.Push("Cooked Patty");
         for (int i = 0; i < size - 2; i++)
         {
             GameObject ingredient = ingredients[Random.Range(0, ingredients.Length)];
@@ -57,6 +53,16 @@ public class TargetBurger : MonoBehaviour
         }
         return mistakes;
 
+    }
+
+    public void UpdateUI()
+    {
+        TargetBurgerUI.text = "";
+        foreach (string ingr in currentTarget)
+        {
+            TargetBurgerUI.text += ingr + "\n";
+        }
+        TargetBurgerUI.text += "Bottom-Bun";
     }
 
 
