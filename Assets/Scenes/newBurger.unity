@@ -2611,6 +2611,7 @@ GameObject:
   - component: {fileID: 1806342415}
   - component: {fileID: 1806342414}
   - component: {fileID: 1806342418}
+  - component: {fileID: 1806342419}
   m_Layer: 0
   m_Name: Grill
   m_TagString: Untagged
@@ -2705,6 +2706,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.4, z: 1}
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &1806342419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806342413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0718350db730ef4d86a4847c09bbe9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientLayer: 10
+  cookedMat: {fileID: 2100000, guid: 1e1abcd8910fac549ac6cc9a60b68bdb, type: 2}
+  CookTime: 20
+  BurnTime: 30
 --- !u!4 &1812652929 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3092610701419639747, guid: 2c1b3f43726c1034fbf0a7da5d190c01,

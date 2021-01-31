@@ -10,7 +10,7 @@ public class BurgerComponent : MonoBehaviour
 
     [SerializeField]private string componentName; 
 
-    public string ComponentName { get { return componentName; } }
+    public string ComponentName { get { return componentName; } set { componentName = value; } }
 
     public BurgerComponentPosition ComponentPosition { get { return bugerComponentPosition; } }
    
