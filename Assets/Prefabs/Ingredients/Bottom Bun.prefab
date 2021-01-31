@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6908286172424584247}
   - component: {fileID: 6908286172424584246}
   - component: {fileID: 6908286172424584242}
-  - component: {fileID: 6908286172424584249}
-  m_Layer: 10
-  m_Name: Top Bun (3)
+  - component: {fileID: 1062744251981549282}
+  m_Layer: 11
+  m_Name: Bottom Bun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 10
   m_CollisionDetection: 0
---- !u!114 &6908286172424584249
+--- !u!114 &1062744251981549282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,8 +120,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6908286172424584248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7602330fa42e1cc41a32818ab790c282, type: 3}
+  m_Script: {fileID: 11500000, guid: c5ef8694b1fc26b47b67119d86597f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bugerComponentPosition: 0
-  componentName: Bottom-Bun
+  MaxAmountburgerComponents: 10
+  targetBurgerObj: {fileID: 0}
+  FinishedBurger: 0
