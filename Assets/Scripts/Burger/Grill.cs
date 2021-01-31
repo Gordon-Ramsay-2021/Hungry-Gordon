@@ -47,7 +47,7 @@ public class Grill : MonoBehaviour
                 burgers[i].gameObject.GetComponent<Renderer>().material = burntMat;
                 Remove = (true, i);
             }
-            if (Time.time - burgers[i].StartCookTime >= CookTime)
+            else if (Time.time - burgers[i].StartCookTime >= CookTime)
             {
 
                 burgers[i].ComponentName = "Cooked Patty";
